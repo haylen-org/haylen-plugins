@@ -1,0 +1,46 @@
+{
+    "interface": 1,
+    "id": "firebase-crashlytics",
+    "name": "Firebase Crashlytics",
+    "version": "1.0.0",
+    "description": "Reports crashes, the Lua errors that stop the app and the errors the app records to Firebase Crashlytics on iOS and Android.",
+    "implementations": {"ios": "native", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "native", "web": "lua", "windows": "lua", "linux": "lua"},
+    "dependencies": {"firebase": "1.0"},
+    "parameters": {
+        "collectionEnabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether Crashlytics sends reports from the start. An app that asks for consent first sets it to false and calls setCollectionEnabled once the person agrees."
+        },
+        "reportLuaErrors": {"type": "boolean", "default": true, "description": "Whether every Lua error that stops the app reaches Crashlytics as a non-fatal error with the stack of the Lua code."}
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios"], "name": "FirebaseCrashlyticsPlugin"},
+        {"type": "appleSources", "platforms": ["ios"], "path": "apple"},
+        {
+            "type": "swiftPackage",
+            "platforms": ["ios"],
+            "name": "Firebase",
+            "url": "https://github.com/firebase/firebase-ios-sdk.git",
+            "exactVersion": "13.1.1",
+            "products": ["FirebaseCrashlytics"]
+        },
+        {"type": "infoPlist", "platforms": ["ios"], "values": {"FirebaseCrashlyticsCollectionEnabled": "${collectionEnabled}"}},
+        {
+            "type": "buildScript",
+            "platforms": ["ios"],
+            "name": "Upload the dSYM to Crashlytics",
+            "script": "if [ \"$CONFIGURATION\" = \"Release\" ]; then \"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"; fi",
+            "inputFiles": [
+                "$(DWARF_DSYM_FOLDER_PATH)/$(DWARF_DSYM_FILE_NAME)",
+                "$(DWARF_DSYM_FOLDER_PATH)/$(DWARF_DSYM_FILE_NAME)/Contents/Resources/DWARF/$(PRODUCT_NAME)",
+                "$(DWARF_DSYM_FOLDER_PATH)/$(DWARF_DSYM_FILE_NAME)/Contents/Info.plist",
+                "$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)"
+            ],
+            "basedOnDependencyAnalysis": false
+        },
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "gradlePlugin", "platforms": ["android"], "id": "com.google.firebase.crashlytics", "version": "3.0.8"},
+        {"type": "manifestPlaceholder", "platforms": ["android"], "name": "firebaseCrashlyticsCollectionEnabled", "value": "${collectionEnabled}"}
+    ]
+}

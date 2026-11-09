@@ -1,0 +1,38 @@
+{
+    "interface": 1,
+    "id": "background-assets",
+    "name": "Background Assets",
+    "version": "1.0.0",
+    "description": "Delivers the named packs of the content of an app as asset packs that the App Store hosts with Background Assets, which the system downloads with the install or when the app asks for them, on iOS, tvOS and visionOS.",
+    "implementations": {"ios": "native", "catalyst": "lua", "tvos": "native", "visionos": "native", "macos": "lua", "android": "lua", "web": "lua", "windows": "lua", "linux": "lua"},
+    "parameters": {
+        "prefetchPacks": {
+            "type": "array",
+            "default": [],
+            "description": "The named packs of the content that the system downloads with the install and every update, while the others download when the app loads one of their assets."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "tvos", "visionos"], "name": "BackgroundAssetsPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "tvos", "visionos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "tvos", "visionos"], "name": "BackgroundAssets.framework"},
+        {
+            "type": "infoPlist",
+            "platforms": ["ios", "tvos", "visionos"],
+            "values": {"BAAppGroupID": "group.$(HAYLEN_BUNDLE_IDENTIFIER)", "BAHasManagedAssetPacks": true, "BAUsesAppleHosting": true}
+        },
+        {"type": "entitlements", "platforms": ["ios", "tvos", "visionos"], "values": {"com.apple.security.application-groups": ["group.$(HAYLEN_BUNDLE_IDENTIFIER)"]}},
+        {
+            "type": "appExtension",
+            "platforms": ["ios", "tvos", "visionos"],
+            "name": "Downloads",
+            "kind": "extensionKit",
+            "point": "com.apple.background-asset-downloader-extension",
+            "sources": "apple-extension",
+            "minimumVersion": "26.0",
+            "frameworks": ["BackgroundAssets.framework", "StoreKit.framework"],
+            "entitlements": {"com.apple.security.application-groups": ["group.$(HAYLEN_BUNDLE_IDENTIFIER)"]}
+        },
+        {"type": "assetPacks", "platforms": ["ios", "tvos", "visionos"], "prefetch": "${prefetchPacks}"}
+    ]
+}

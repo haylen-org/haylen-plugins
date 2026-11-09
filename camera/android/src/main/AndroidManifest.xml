@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The camera that the permission "camera" asks the person for, which devices without a camera, such as TVs, lack while they still install the app. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.camera"
+            android:value="com.haylen.plugins.camera.CameraPlugin" />
+    </application>
+</manifest>

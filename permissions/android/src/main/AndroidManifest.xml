@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The plugin declares no permission of its own. Each plugin that owns a permission declares the permissions of the manifest that it asks for in the manifest of its module. -->
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.permissions"
+            android:value="com.haylen.plugins.permissions.PermissionsPlugin" />
+    </application>
+</manifest>

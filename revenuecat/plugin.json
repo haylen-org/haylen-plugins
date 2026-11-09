@@ -1,0 +1,27 @@
+{
+    "interface": 1,
+    "id": "revenuecat",
+    "name": "RevenueCat",
+    "version": "1.0.0",
+    "description": "In-app purchases and subscriptions through RevenueCat, with offerings, purchases, restores, entitlements and the user of the app, on Apple platforms and Android.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "lua", "macos": "native", "android": "native", "web": "lua", "windows": "lua", "linux": "lua"},
+    "parameters": {
+        "appleApiKey": {"type": "string", "platforms": ["ios", "catalyst", "tvos", "macos"], "required": true, "description": "The public Apple API key of the RevenueCat project, which starts with appl_."},
+        "androidApiKey": {"type": "string", "platforms": ["android"], "required": true, "description": "The public Google API key of the RevenueCat project, which starts with goog_."},
+        "debugLogs": {"type": "boolean", "default": false, "description": "Whether the SDK writes its debug log."}
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "macos"], "name": "RevenueCatPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "macos"], "path": "apple"},
+        {
+            "type": "swiftPackage",
+            "platforms": ["ios", "catalyst", "tvos", "macos"],
+            "name": "RevenueCat",
+            "url": "https://github.com/RevenueCat/purchases-ios-spm.git",
+            "exactVersion": "5.102.3",
+            "products": ["RevenueCat"]
+        },
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "macos"], "name": "StoreKit.framework"},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"}
+    ]
+}

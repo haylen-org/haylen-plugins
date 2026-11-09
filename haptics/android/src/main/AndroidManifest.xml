@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The vibrator of the device vibrates only for an app with this permission, which Android grants at install. The haptic feedback of the system needs none. An app that never calls "haptics.vibrate" may remove it with tools:node="remove", and the call then fails with the code "unsupported". -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.haptics"
+            android:value="com.haylen.plugins.haptics.HapticsPlugin" />
+    </application>
+</manifest>

@@ -1,0 +1,34 @@
+{
+    "interface": 1,
+    "id": "bluetooth",
+    "name": "Bluetooth",
+    "version": "1.0.0",
+    "description": "Bluetooth Low Energy as a central: scan, connect, services, characteristics, reads, writes and notifications.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "native", "linux": "native"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["bluetooth"],
+    "parameters": {
+        "bluetoothUsage": {
+            "type": "string",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "default": "The app connects to Bluetooth devices.",
+            "description": "Text of the Bluetooth permission prompt on Apple platforms."
+        },
+        "macBluetooth": {
+            "type": "boolean",
+            "platforms": ["catalyst", "macos"],
+            "default": true,
+            "description": "Whether the Mac app signs with the entitlement of the App Sandbox that Bluetooth needs. The parameter has a value on the Mac alone, so the other platforms leave the entitlement out."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "BluetoothPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "CoreBluetooth.framework"},
+        {"type": "infoPlist", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"NSBluetoothAlwaysUsageDescription": "${bluetoothUsage}"}},
+        {"type": "entitlements", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"com.apple.security.device.bluetooth": "${macBluetooth}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/bluetooth.js"},
+        {"type": "nativeLibrary", "platforms": ["windows", "linux"], "cmake": "native"}
+    ]
+}

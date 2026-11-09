@@ -1,0 +1,19 @@
+{
+    "interface": 1,
+    "id": "play-asset-delivery",
+    "name": "Play Asset Delivery",
+    "version": "1.0.0",
+    "description": "Delivers the named packs of the content of an app as asset packs of Google Play, which Play downloads right after the install or when the app asks for them.",
+    "implementations": {"ios": "lua", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "native", "web": "lua", "windows": "lua", "linux": "lua"},
+    "parameters": {
+        "fastFollowPacks": {
+            "type": "array",
+            "default": [],
+            "description": "The named packs of the content that Google Play downloads right after the install, while the others download when the app loads one of their assets."
+        }
+    },
+    "contributions": [
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "assetPacks", "platforms": ["android"], "fastFollow": "${fastFollowPacks}"}
+    ]
+}

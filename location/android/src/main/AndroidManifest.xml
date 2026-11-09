@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The location that the permissions "location" and "preciseLocation" ask the person for, which devices without a location lack while they still install the app. An app that watches in the background adds "ACCESS_BACKGROUND_LOCATION", "FOREGROUND_SERVICE" and "FOREGROUND_SERVICE_LOCATION" to its own manifest, which the README of the plugin shows, so no other app declares them. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.location"
+            android:value="com.haylen.plugins.location.LocationPlugin" />
+        <!-- The foreground service that keeps a watch in the background running. -->
+        <service
+            android:name="com.haylen.plugins.location.LocationWatchService"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+    </application>
+</manifest>

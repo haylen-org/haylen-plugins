@@ -1,0 +1,34 @@
+{
+    "interface": 1,
+    "id": "microphone",
+    "name": "Microphone",
+    "version": "1.0.0",
+    "description": "The microphone of the device into an audio stream of mono samples, with its level and the permission microphone.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "native", "linux": "native"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["microphone"],
+    "parameters": {
+        "microphoneUsage": {
+            "type": "string",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "default": "The app listens to the microphone.",
+            "description": "The text of the microphone prompt on Apple platforms, the NSMicrophoneUsageDescription of the Info.plist."
+        },
+        "macEntitlement": {
+            "type": "boolean",
+            "platforms": ["macos"],
+            "default": true,
+            "description": "Whether the macOS app signs with the entitlement com.apple.security.device.audio-input, without which the hardened runtime gives the app no microphone. The parameter has a value on macOS alone, so the other platforms leave the entitlement out."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "MicrophonePlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "AVFoundation.framework"},
+        {"type": "infoPlist", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"NSMicrophoneUsageDescription": "${microphoneUsage}"}},
+        {"type": "entitlements", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"com.apple.security.device.audio-input": "${macEntitlement}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/microphone.js"},
+        {"type": "nativeLibrary", "platforms": ["macos", "windows", "linux"], "cmake": "native"}
+    ]
+}

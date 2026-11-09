@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The microphone that the permission "microphone" asks the person for, which devices without a microphone, such as many TVs, lack while they still install the app. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.microphone"
+            android:value="com.haylen.plugins.microphone.MicrophonePlugin" />
+    </application>
+</manifest>

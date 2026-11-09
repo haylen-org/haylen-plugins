@@ -1,0 +1,41 @@
+{
+    "name": "Location Sample",
+    "identifier": "com.haylen.location",
+    "version": "1.0.0",
+    "category": "utility",
+    "description": "Reads the location with the Location plugin, one fix or its updates, and asks for the permissions location, preciseLocation and backgroundLocation.",
+    "orientation": "any",
+    "window": {
+        "title": "Location Sample",
+        "width": 1280,
+        "height": 720,
+        "resizable": true
+    },
+    "design": {
+        "width": 1920,
+        "height": 1080,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "plugins": {
+        "permissions": {
+            "path": "../../permissions"
+        },
+        "location": {
+            "path": "..",
+            "parameters": {
+                "backgroundLocationUsage": "The sample follows the location in the background to show the updates of a watch."
+            }
+        }
+    },
+    "platforms": {
+        "ios": {"infoPlist": {"UIBackgroundModes": ["location"]}},
+        "android": {
+            "manifest": {"permissions": ["android.permission.ACCESS_BACKGROUND_LOCATION", "android.permission.FOREGROUND_SERVICE", "android.permission.FOREGROUND_SERVICE_LOCATION"]}
+        }
+    }
+}

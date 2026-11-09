@@ -1,0 +1,8 @@
+# The packages of the app.
+/dist/
+# The signing keys of Android release builds with their passwords, which "haylen app sign" writes.
+platform/android/keystore/
+# Files of Finder and of the editors.
+.DS_Store
+.idea/
+.vscode/

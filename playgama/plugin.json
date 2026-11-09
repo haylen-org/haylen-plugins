@@ -1,0 +1,18 @@
+{
+    "interface": 1,
+    "id": "playgama",
+    "name": "Playgama Bridge",
+    "version": "1.0.0",
+    "description": "Publishes a web game on the platforms of Playgama Bridge with one API: the platform and the player, interstitial, rewarded and banner ads, the storage of the platform and the messages of the game.",
+    "implementations": {"ios": "lua", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "lua", "web": "native", "windows": "lua", "linux": "lua"},
+    "parameters": {
+        "bridgeUrl": {
+            "type": "string",
+            "default": "https://cdn.jsdelivr.net/npm/@playgama/bridge@2.4.1/dist/playgama-bridge.js",
+            "description": "The address of the script of Playgama Bridge, by default the file of its npm release 2.4.1, which a site may also serve next to its page."
+        }
+    },
+    "contributions": [
+        {"type": "webModule", "platforms": ["web"], "path": "web/playgama.js"}
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "name": "Dialogs",
+    "identifier": "com.haylen.dialogs",
+    "version": "1.0.0",
+    "category": "utility",
+    "description": "The sample of the Dialogs plugin, with a button for every dialog and its answer.",
+    "orientation": "any",
+    "window": {
+        "title": "Dialogs",
+        "width": 1280,
+        "height": 720,
+        "resizable": true
+    },
+    "design": {
+        "width": 1920,
+        "height": 1080,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "plugins": {
+        "dialogs": {
+            "path": ".."
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interface": 1,
+    "id": "google-analytics",
+    "name": "Google Analytics",
+    "version": "1.0.0",
+    "description": "Sends the events of a web app to Google Analytics 4 through gtag.js, with user properties and consent.",
+    "implementations": {"ios": "lua", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "lua", "web": "native", "windows": "lua", "linux": "lua"},
+    "parameters": {
+        "measurementId": {"type": "string", "platforms": ["web"], "required": true, "description": "The measurement ID of the web data stream of the Google Analytics property, such as G-XXXXXXXXXX."},
+        "consentDefault": {
+            "type": "string",
+            "default": "granted",
+            "description": "The consent that the page starts with for the storage of Analytics and of ads, granted or denied, which setConsent changes once the person chose."
+        }
+    },
+    "contributions": [
+        {"type": "webModule", "platforms": ["web"], "path": "web/google-analytics.js"}
+    ]
+}

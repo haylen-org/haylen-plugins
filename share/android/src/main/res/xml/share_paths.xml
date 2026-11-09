@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The folder of the cache where the plugin writes the files of a share, the only one that its provider serves. -->
+<paths>
+    <cache-path name="share" path="share/" />
+</paths>

@@ -1,0 +1,86 @@
+{
+    "name": "Plugin Lab",
+    "identifier": "com.haylen.pluginlab",
+    "version": "1.0.0",
+    "category": "developer",
+    "orientation": "portrait",
+    "window": {
+        "title": "Plugin Lab",
+        "width": 720,
+        "height": 1280,
+        "resizable": true
+    },
+    "design": {
+        "width": 1080,
+        "height": 1920,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "plugins": {
+        "firebase": {
+            "path": "../firebase",
+            "parameters": {
+                "servicesPlist": "platform/firebase/GoogleService-Info.plist",
+                "servicesJson": "platform/firebase/google-services.json",
+                "webConfig": {
+                    "apiKey": "AIzaSyA00000000000000000000000000000000",
+                    "authDomain": "haylen-plugin-lab.firebaseapp.com",
+                    "projectId": "haylen-plugin-lab",
+                    "storageBucket": "haylen-plugin-lab.firebasestorage.app",
+                    "messagingSenderId": "123456789012",
+                    "appId": "1:123456789012:web:0123456789abcdef012345",
+                    "measurementId": "G-0000000000"
+                }
+            }
+        },
+        "permissions": {
+            "path": "../permissions"
+        },
+        "notifications": {
+            "path": "../notifications"
+        },
+        "firebase-analytics": {
+            "path": "../firebase-analytics"
+        },
+        "firebase-crashlytics": {
+            "path": "../firebase-crashlytics"
+        },
+        "firebase-messaging": {
+            "path": "../firebase-messaging",
+            "parameters": {
+                "vapidKey": "BLabPlaceholderVapidKeyThatNamesNoRealFirebaseProjectAtAll0000000000000000000000000000"
+            }
+        },
+        "admob": {
+            "path": "../admob",
+            "parameters": {
+                "iosAppId": "ca-app-pub-3940256099942544~1458002511",
+                "androidAppId": "ca-app-pub-3940256099942544~3347511713"
+            }
+        },
+        "revenuecat": {
+            "path": "../revenuecat",
+            "parameters": {
+                "appleApiKey": "appl_haylenPluginLabPlaceholder",
+                "androidApiKey": "goog_haylenPluginLabPlaceholder",
+                "debugLogs": true
+            }
+        },
+        "app-tracking-transparency": {
+            "path": "../app-tracking-transparency"
+        },
+        "playgama": {
+            "path": "../playgama"
+        },
+        "google-analytics": {
+            "path": "../google-analytics",
+            "parameters": {
+                "measurementId": "G-0000000000"
+            }
+        }
+    }
+}

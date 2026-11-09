@@ -1,0 +1,26 @@
+{
+    "interface": 1,
+    "id": "motion",
+    "name": "Motion",
+    "version": "1.0.0",
+    "description": "The accelerometer, the gyroscope and the attitude of the device, with the permission motion.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "native", "linux": "native"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["motion"],
+    "parameters": {
+        "motionUsage": {
+            "type": "string",
+            "platforms": ["ios", "visionos"],
+            "default": "The app reads how the device moves and leans.",
+            "description": "Text of the motion permission prompt on iOS, iPadOS and visionOS."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "MotionPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "infoPlist", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"NSMotionUsageDescription": "${motionUsage}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/motion.js"},
+        {"type": "nativeLibrary", "platforms": ["macos", "windows", "linux"], "cmake": "native"}
+    ]
+}

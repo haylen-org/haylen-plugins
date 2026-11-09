@@ -1,0 +1,36 @@
+{
+    "interface": 1,
+    "id": "camera",
+    "name": "Camera",
+    "version": "1.0.0",
+    "description": "The cameras of the device into a video stream, with photos as JPEG bytes and the permission camera.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "native", "linux": "native"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["camera"],
+    "parameters": {
+        "cameraUsage": {
+            "type": "string",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "default": "The app shows the camera.",
+            "description": "The text of the camera prompt on Apple platforms, the NSCameraUsageDescription of the Info.plist."
+        },
+        "macEntitlement": {
+            "type": "boolean",
+            "platforms": ["macos"],
+            "default": true,
+            "description": "Whether the macOS app signs with the entitlement com.apple.security.device.camera, without which the hardened runtime gives the app no camera. The parameter has a value on macOS alone, so the other platforms leave the entitlement out."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "CameraPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "AVFoundation.framework"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "CoreMedia.framework"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "ImageIO.framework"},
+        {"type": "infoPlist", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"NSCameraUsageDescription": "${cameraUsage}"}},
+        {"type": "entitlements", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"com.apple.security.device.camera": "${macEntitlement}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/camera.js"},
+        {"type": "nativeLibrary", "platforms": ["macos", "windows", "linux"], "cmake": "native"}
+    ]
+}

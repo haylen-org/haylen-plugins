@@ -1,0 +1,21 @@
+# The desktop part of the Bluetooth plugin, a C++ library that the Windows and Linux apps load. The tooling builds the target named after the plugin, `bluetooth`, against the installed SDK of the engine, whose target `haylen::native` gives it `haylen/platform/native/HaylenNative.h` and nlohmann/json. Each system serves Bluetooth Low Energy through its own API: the Windows Runtime of `Windows.Devices.Bluetooth` through C++/WinRT, whose headers come with the Windows SDK, on Windows, and BlueZ on the system bus through libdbus on Linux, whose headers come with the package `libdbus-1-dev` of Debian and Ubuntu and `dbus-devel` of Fedora.
+cmake_minimum_required(VERSION 3.28...4.4)
+project(bluetooth LANGUAGES CXX)
+
+find_package(haylen CONFIG REQUIRED)
+
+add_library(bluetooth Bluetooth.cpp BluetoothBridge.cpp BluetoothPlugin.cpp BluetoothRequest.cpp)
+target_link_libraries(bluetooth PRIVATE haylen::native)
+target_compile_features(bluetooth PRIVATE cxx_std_20)
+if(WIN32)
+  target_sources(bluetooth PRIVATE WindowsBluetooth.cpp WindowsBluetoothWorker.cpp)
+  target_compile_definitions(bluetooth PRIVATE NOMINMAX)
+  target_link_libraries(bluetooth PRIVATE windowsapp)
+else()
+  find_package(PkgConfig REQUIRED)
+  find_package(Threads REQUIRED)
+  pkg_check_modules(DBUS REQUIRED IMPORTED_TARGET dbus-1)
+  target_sources(bluetooth PRIVATE BluezObject.cpp LinuxBluetooth.cpp)
+  target_link_libraries(bluetooth PRIVATE PkgConfig::DBUS Threads::Threads)
+endif()
+set_target_properties(bluetooth PROPERTIES CXX_EXTENSIONS OFF CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)

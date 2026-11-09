@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- A foreground service of the type that plays media, which Android 14 and later grant with the permission of the type. The media notification needs no permission to post, since Android exempts the notifications of a media session. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
+    <application>
+        <!-- Keeps the app in the foreground with its media notification while what it plays shows as playing, so the engine keeps the sound of the app playing in the background, as it does for every app whose merged manifest declares a service of this type. -->
+        <service
+            android:name="com.haylen.plugins.mediasession.MediaSessionService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.media-session"
+            android:value="com.haylen.plugins.mediasession.MediaSessionPlugin" />
+    </application>
+</manifest>

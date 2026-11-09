@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The permission that posting needs from Android 13 on, which the Permissions plugin asks the person for, and the start of the device, after which the plugin sets the alarms of the notifications that wait again. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.notifications"
+            android:value="com.haylen.plugins.notifications.NotificationsPlugin" />
+
+        <!-- Posts each notification when its alarm goes off, and sets the alarms again when the device starts. Only the system and the app send it broadcasts. -->
+        <receiver
+            android:name="com.haylen.plugins.notifications.NotificationsReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

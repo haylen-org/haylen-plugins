@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The local network that the permission "localNetwork" asks the person for on Android 17 and later, of the group of nearby devices. Earlier versions of Android do not know it and reach the local network with "INTERNET". The picker of services needs no permission. -->
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.local-network"
+            android:value="com.haylen.plugins.localnetwork.LocalNetworkPlugin" />
+    </application>
+</manifest>

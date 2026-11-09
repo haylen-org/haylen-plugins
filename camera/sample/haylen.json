@@ -1,0 +1,32 @@
+{
+    "name": "Camera Sample",
+    "identifier": "com.haylen.camera",
+    "version": "1.0.0",
+    "category": "utility",
+    "description": "Shows the picture of every camera with the Camera plugin, takes photos and asks for the permission camera.",
+    "orientation": "any",
+    "window": {
+        "title": "Camera Sample",
+        "width": 1280,
+        "height": 720,
+        "resizable": true
+    },
+    "design": {
+        "width": 1920,
+        "height": 1080,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "plugins": {
+        "permissions": {
+            "path": "../../permissions"
+        },
+        "camera": {
+            "path": ".."
+        }
+    }
+}

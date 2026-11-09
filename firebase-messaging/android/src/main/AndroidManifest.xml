@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The notifications that the plugin posts while the app is in front need it from Android 13 on. The plugin `notifications` owns the permission `notifications` that the app asks the person for. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application>
+        <!-- The provider of the `haylen-plugins` library creates and loads the plugin class that this entry names when the app process starts. -->
+        <meta-data
+            android:name="dev.haylen.plugin.firebase-messaging"
+            android:value="com.haylen.plugins.firebasemessaging.FirebaseMessagingPlugin" />
+        <!-- Cloud Messaging registers the app instance by its Firebase installation ID. -->
+        <meta-data
+            android:name="firebase_messaging_installation_id_enabled"
+            android:value="true" />
+        <!-- The channel of the notifications that name none, from the parameter `notificationChannel`. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="${firebaseMessagingChannel}" />
+
+        <service
+            android:name="com.haylen.plugins.firebasemessaging.FirebaseMessagingPluginService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- A message whose click_action names this action opens the app through the activity of `haylen-links`, like the notifications that the plugin posts. -->
+        <activity android:name="dev.haylen.HaylenLinkActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="com.haylen.plugins.firebasemessaging.OPEN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

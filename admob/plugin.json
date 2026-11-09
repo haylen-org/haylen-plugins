@@ -1,0 +1,46 @@
+{
+    "interface": 1,
+    "id": "admob",
+    "name": "AdMob",
+    "version": "1.0.0",
+    "description": "The banner, interstitial and rewarded ads of Google AdMob, with the consent form of the User Messaging Platform, on iOS and Android.",
+    "implementations": {"ios": "native", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "native", "web": "lua", "windows": "lua", "linux": "lua"},
+    "parameters": {
+        "iosAppId": {
+            "type": "string",
+            "platforms": ["ios"],
+            "required": true,
+            "description": "The app ID of the iOS app in AdMob, such as ca-app-pub-3940256099942544~1458002511, the one of the test ads of Google."
+        },
+        "androidAppId": {
+            "type": "string",
+            "platforms": ["android"],
+            "required": true,
+            "description": "The app ID of the Android app in AdMob, such as ca-app-pub-3940256099942544~3347511713, the one of the test ads of Google."
+        },
+        "testDeviceIds": {"type": "array", "default": [], "description": "The IDs of the devices that always receive test ads, which the log of the SDK prints for each device."}
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios"], "name": "AdMobPlugin"},
+        {"type": "appleSources", "platforms": ["ios"], "path": "apple"},
+        {
+            "type": "swiftPackage",
+            "platforms": ["ios"],
+            "name": "GoogleMobileAds",
+            "url": "https://github.com/googleads/swift-package-manager-google-mobile-ads.git",
+            "exactVersion": "13.12.0",
+            "products": ["GoogleMobileAds"]
+        },
+        {
+            "type": "swiftPackage",
+            "platforms": ["ios"],
+            "name": "GoogleUserMessagingPlatform",
+            "url": "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git",
+            "exactVersion": "3.1.0",
+            "products": ["GoogleUserMessagingPlatform"]
+        },
+        {"type": "infoPlist", "platforms": ["ios"], "values": {"GADApplicationIdentifier": "${iosAppId}", "SKAdNetworkItems": [{"SKAdNetworkIdentifier": "cstr6suwn9.skadnetwork"}]}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "manifestPlaceholder", "platforms": ["android"], "name": "admobAppId", "value": "${androidAppId}"}
+    ]
+}

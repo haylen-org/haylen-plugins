@@ -1,0 +1,26 @@
+{
+    "interface": 1,
+    "id": "dialogs",
+    "name": "Dialogs",
+    "version": "1.0.0",
+    "description": "The native dialogs of the system: messages with up to three buttons, and the pickers of files to open, of a place to save data, of a folder and of photos.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "native", "linux": "native"},
+    "parameters": {
+        "macFiles": {
+            "type": "boolean",
+            "platforms": ["macos"],
+            "default": true,
+            "description": "Whether a sandboxed macOS app may read and write the files and folders that the person picks, which the pickers need there."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "DialogsPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "PhotosUI.framework"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "UniformTypeIdentifiers.framework"},
+        {"type": "entitlements", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"com.apple.security.files.user-selected.read-write": "${macFiles}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/dialogs.js"},
+        {"type": "nativeLibrary", "platforms": ["macos", "windows", "linux"], "cmake": "native"}
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "name": "Google Analytics",
+    "identifier": "com.haylen.googleanalytics",
+    "version": "1.0.0",
+    "category": "developer",
+    "description": "The sample of the Google Analytics plugin, with a button for every call.",
+    "orientation": "any",
+    "window": {
+        "title": "Google Analytics",
+        "width": 1280,
+        "height": 720,
+        "resizable": true
+    },
+    "design": {
+        "width": 1920,
+        "height": 1080,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "plugins": {
+        "google-analytics": {
+            "path": "..",
+            "parameters": {
+                "measurementId": "G-XXXXXXXXXX"
+            }
+        }
+    }
+}

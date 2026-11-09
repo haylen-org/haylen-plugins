@@ -1,0 +1,23 @@
+# The desktop part of the Links plugin, a C++ library that the desktop player and the Windows and Linux apps load. The tooling builds the target named after the plugin, `links`, against the installed SDK of the engine, whose target `haylen::native` gives it `haylen/platform/native/HaylenNative.h` and nlohmann/json. A Mac opens urls through AppKit in Objective-C++, Windows through the shell and Linux with `xdg-open` from a thread of its own.
+cmake_minimum_required(VERSION 3.28...4.4)
+project(links LANGUAGES CXX)
+
+find_package(haylen CONFIG REQUIRED)
+
+add_library(links Links.cpp LinksPlugin.cpp)
+target_link_libraries(links PRIVATE haylen::native)
+target_compile_features(links PRIVATE cxx_std_20)
+if(APPLE)
+  enable_language(OBJCXX)
+  target_sources(links PRIVATE LinkOpener.mm)
+  set_source_files_properties(LinkOpener.mm PROPERTIES COMPILE_OPTIONS -fobjc-arc)
+  target_link_libraries(links PRIVATE "-framework AppKit")
+elseif(WIN32)
+  target_sources(links PRIVATE LinkOpenerWindows.cpp)
+  target_link_libraries(links PRIVATE shell32)
+else()
+  find_package(Threads REQUIRED)
+  target_sources(links PRIVATE LinkOpenerLinux.cpp)
+  target_link_libraries(links PRIVATE Threads::Threads)
+endif()
+set_target_properties(links PROPERTIES CXX_EXTENSIONS OFF CXX_VISIBILITY_PRESET hidden OBJCXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)

@@ -1,0 +1,17 @@
+{
+    "interface": 1,
+    "id": "permission-states",
+    "name": "Permission States",
+    "version": "1.0.0",
+    "description": "A plugin of the sample of the Permissions plugin that owns a permission of every state, held, asked, refused, untold and absent, and a method that uses one of them.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "lua", "linux": "lua"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["held", "asked", "refused", "untold", "absent"],
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "PermissionStatesPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "UserNotifications.framework"},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/permission-states.js"}
+    ]
+}

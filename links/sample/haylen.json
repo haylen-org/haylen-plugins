@@ -1,0 +1,27 @@
+{
+    "name": "Links Sample",
+    "identifier": "com.haylen.links",
+    "version": "1.0.0",
+    "category": "utility",
+    "description": "Opens urls through the Links plugin and shows each answer.",
+    "orientation": "any",
+    "window": {
+        "title": "Links Sample",
+        "width": 1280,
+        "height": 720,
+        "resizable": true
+    },
+    "design": {
+        "width": 1920,
+        "height": 1080,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "plugins": {
+        "links": {"path": ".."}
+    }
+}

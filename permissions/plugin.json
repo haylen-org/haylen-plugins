@@ -1,0 +1,13 @@
+{
+    "interface": 1,
+    "id": "permissions",
+    "name": "Permissions",
+    "version": "1.0.0",
+    "description": "The permission contract of the plugins that own a permission: five states on every platform, the registration of each permission in their native parts, one queue of the prompts of the system and the Lua API that checks and asks for a permission.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "lua", "linux": "lua"},
+    "contributions": [
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/permissions.js"}
+    ]
+}

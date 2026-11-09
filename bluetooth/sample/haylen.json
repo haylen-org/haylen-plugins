@@ -1,0 +1,32 @@
+{
+    "name": "Bluetooth",
+    "identifier": "com.haylen.bluetooth",
+    "version": "1.0.0",
+    "category": "utility",
+    "description": "The sample of the Bluetooth plugin, with a button for every call.",
+    "orientation": "any",
+    "window": {
+        "title": "Bluetooth",
+        "width": 1280,
+        "height": 720,
+        "resizable": true
+    },
+    "design": {
+        "width": 1920,
+        "height": 1080,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "plugins": {
+        "permissions": {
+            "path": "../../permissions"
+        },
+        "bluetooth": {
+            "path": ".."
+        }
+    }
+}

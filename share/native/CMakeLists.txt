@@ -1,0 +1,22 @@
+# The desktop part of the Share plugin, a C++ library that the macOS desktop player and the Windows apps load. The tooling builds the target named after the plugin, `share`, against the installed SDK of the engine, whose target `haylen::native` gives it `haylen/platform/native/HaylenNative.h` and nlohmann/json. Each system shows its own share UI: the sharing service picker of AppKit in Objective-C++ on macOS, and the share UI of `IDataTransferManagerInterop` through C++/WinRT, whose headers come with the Windows SDK, on Windows.
+cmake_minimum_required(VERSION 3.28...4.4)
+project(share LANGUAGES CXX)
+
+find_package(haylen CONFIG REQUIRED)
+
+add_library(share Share.cpp ShareAnswer.cpp SharePlugin.cpp ShareRequest.cpp)
+target_link_libraries(share PRIVATE haylen::native)
+target_compile_features(share PRIVATE cxx_std_20)
+if(APPLE)
+  enable_language(OBJCXX)
+  target_sources(share PRIVATE MacosShare.mm)
+  set_source_files_properties(MacosShare.mm PROPERTIES COMPILE_OPTIONS -fobjc-arc)
+  target_link_libraries(share PRIVATE "-framework AppKit")
+elseif(WIN32)
+  target_sources(share PRIVATE WindowsShare.cpp WindowsShareWorker.cpp)
+  target_compile_definitions(share PRIVATE NOMINMAX)
+  target_link_libraries(share PRIVATE windowsapp ole32 user32)
+else()
+  message(FATAL_ERROR "The desktop part of the Share plugin serves macOS and Windows, the platforms of its \"nativeLibrary\" contribution.")
+endif()
+set_target_properties(share PROPERTIES CXX_EXTENSIONS OFF CXX_VISIBILITY_PRESET hidden OBJCXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)

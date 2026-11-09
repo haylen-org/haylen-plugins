@@ -1,0 +1,21 @@
+# The desktop part of the Notifications plugin on Windows and Linux, a C++ library that the Windows and Linux apps load. The tooling builds the target named after the plugin, `notifications`, against the installed SDK of the engine, whose target `haylen::native` gives it `haylen/platform/native/HaylenNative.h` and nlohmann/json. On Windows it schedules toasts through `Windows.UI.Notifications` with C++/WinRT, whose headers come with the Windows SDK. On Linux it talks to the notification server through libdbus, whose headers come with the package `libdbus-1-dev` of Debian and Ubuntu and `dbus-devel` of Fedora, and whose library every Linux desktop has.
+cmake_minimum_required(VERSION 3.28...4.4)
+project(notifications LANGUAGES CXX)
+
+find_package(haylen CONFIG REQUIRED)
+
+add_library(notifications Notifications.cpp)
+target_link_libraries(notifications PRIVATE haylen::native)
+target_compile_features(notifications PRIVATE cxx_std_20)
+if(WIN32)
+  target_sources(notifications PRIVATE NotificationsActivator.cpp NotificationsShortcut.cpp NotificationsWorker.cpp WindowsNotifications.cpp)
+  target_compile_definitions(notifications PRIVATE NOMINMAX)
+  target_link_libraries(notifications PRIVATE windowsapp ole32 shell32 propsys advapi32)
+else()
+  find_package(PkgConfig REQUIRED)
+  find_package(Threads REQUIRED)
+  pkg_check_modules(DBUS REQUIRED IMPORTED_TARGET dbus-1)
+  target_sources(notifications PRIVATE LinuxNotifications.cpp)
+  target_link_libraries(notifications PRIVATE PkgConfig::DBUS Threads::Threads)
+endif()
+set_target_properties(notifications PROPERTIES CXX_EXTENSIONS OFF CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)

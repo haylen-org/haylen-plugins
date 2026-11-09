@@ -1,0 +1,30 @@
+{
+    "name": "Media Session",
+    "identifier": "com.haylen.mediasession",
+    "version": "1.0.0",
+    "category": "music",
+    "description": "The sample of the Media Session plugin, which plays a loop in the now-playing controls of the system and logs every command.",
+    "orientation": "any",
+    "window": {
+        "title": "Media Session",
+        "width": 1280,
+        "height": 720,
+        "resizable": true
+    },
+    "design": {
+        "width": 1920,
+        "height": 1080,
+        "scaling": "expand"
+    },
+    "clearColor": "#FF101418",
+    "splash": {
+        "logo": "logo.png",
+        "background": "#FF101418"
+    },
+    "audio": {
+        "iosSession": "playback"
+    },
+    "plugins": {
+        "media-session": {"path": ".."}
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "interface": 1,
+    "id": "location",
+    "name": "Location",
+    "version": "1.0.0",
+    "description": "One fix of the location of the device or its updates, with the permissions location, preciseLocation and backgroundLocation.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "native", "linux": "native"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["location", "preciseLocation", "backgroundLocation"],
+    "parameters": {
+        "locationUsage": {
+            "type": "string",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "default": "The app uses the location.",
+            "description": "The text of the location prompt on Apple platforms, the NSLocationWhenInUseUsageDescription and the NSLocationUsageDescription of the Info.plist."
+        },
+        "preciseLocationUsage": {
+            "type": "string",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "default": "The app needs the precise location for this.",
+            "description": "The text of the prompt that asks a person who allowed the approximate location for the precise location while the app is in use, the key preciseLocation of the NSLocationTemporaryUsageDescriptionDictionary of the Info.plist."
+        },
+        "backgroundLocationUsage": {
+            "type": "string",
+            "platforms": ["ios"],
+            "description": "The text of the prompt of the location in the background on iPhones and iPads, the NSLocationAlwaysAndWhenInUseUsageDescription of the Info.plist, which only an app that reads the location in the background gives."
+        },
+        "backgroundNotification": {
+            "type": "string",
+            "platforms": ["android"],
+            "default": "The app follows the location.",
+            "description": "The text of the notification that Android shows while a watch keeps the location in the background."
+        },
+        "macEntitlement": {
+            "type": "boolean",
+            "platforms": ["macos"],
+            "default": true,
+            "description": "Whether the macOS app signs with the entitlement com.apple.security.personal-information.location, without which the hardened runtime gives the app no location. The parameter has a value on macOS alone, so the other platforms leave the entitlement out."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "LocationPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "CoreLocation.framework"},
+        {
+            "type": "infoPlist",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "values": {
+                "NSLocationWhenInUseUsageDescription": "${locationUsage}",
+                "NSLocationUsageDescription": "${locationUsage}",
+                "NSLocationTemporaryUsageDescriptionDictionary": {"preciseLocation": "${preciseLocationUsage}"},
+                "NSLocationAlwaysAndWhenInUseUsageDescription": "${backgroundLocationUsage}"
+            }
+        },
+        {"type": "entitlements", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "values": {"com.apple.security.personal-information.location": "${macEntitlement}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/location.js"},
+        {"type": "nativeLibrary", "platforms": ["macos", "windows", "linux"], "cmake": "native"}
+    ]
+}

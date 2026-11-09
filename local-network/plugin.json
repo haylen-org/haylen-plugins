@@ -1,0 +1,40 @@
+{
+    "interface": 1,
+    "id": "local-network",
+    "name": "Local Network",
+    "version": "1.0.0",
+    "description": "The local network: the permission localNetwork, the picker of the system that hands the app one service of the local network without the permission, and the advertisement of a service of the app, for apps that play or work with devices on the same network.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "lua", "linux": "lua"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["localNetwork"],
+    "parameters": {
+        "localNetworkUsage": {
+            "type": "string",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "default": "The app connects to devices on the local network.",
+            "description": "The text of the local network prompt on Apple platforms, the NSLocalNetworkUsageDescription of the Info.plist."
+        },
+        "bonjourServices": {
+            "type": "array",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "default": [],
+            "description": "The Bonjour service types that the app finds and advertises on Apple platforms, such as \"_my-game._tcp\", the NSBonjourServices of the Info.plist, without which the system finds and advertises no service of a type."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "LocalNetworkPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "Network.framework"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "SwiftUI.framework"},
+        {
+            "type": "infoPlist",
+            "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"],
+            "values": {
+                "NSLocalNetworkUsageDescription": "${localNetworkUsage}",
+                "NSBonjourServices": "${bonjourServices}"
+            }
+        },
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/local-network.js"}
+    ]
+}

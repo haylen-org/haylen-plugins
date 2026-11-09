@@ -1,0 +1,32 @@
+{
+    "interface": 1,
+    "id": "firebase-analytics",
+    "name": "Firebase Analytics",
+    "version": "1.0.0",
+    "description": "Logs events, user properties and consent to Google Analytics through Firebase on iOS, Android and the web.",
+    "implementations": {"ios": "native", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "native", "web": "native", "windows": "lua", "linux": "lua"},
+    "dependencies": {"firebase": "1.0"},
+    "parameters": {
+        "collectionEnabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether Analytics collects from the start. An app that asks for consent first sets it to false and calls setCollectionEnabled once the person agrees."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios"], "name": "FirebaseAnalyticsPlugin"},
+        {"type": "appleSources", "platforms": ["ios"], "path": "apple"},
+        {
+            "type": "swiftPackage",
+            "platforms": ["ios"],
+            "name": "Firebase",
+            "url": "https://github.com/firebase/firebase-ios-sdk.git",
+            "exactVersion": "13.1.1",
+            "products": ["FirebaseAnalytics"]
+        },
+        {"type": "infoPlist", "platforms": ["ios"], "values": {"FIREBASE_ANALYTICS_COLLECTION_ENABLED": "${collectionEnabled}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "manifestPlaceholder", "platforms": ["android"], "name": "firebaseAnalyticsCollectionEnabled", "value": "${collectionEnabled}"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/firebase-analytics.js"}
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "interface": 1,
+    "id": "media-session",
+    "name": "Media Session",
+    "version": "1.0.0",
+    "description": "Shows what the app plays in the now-playing controls of the system, whose media keys, headset buttons and remote commands reach the app, and keeps the sound of the app playing in the background.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "native", "macos": "native", "android": "native", "web": "native", "windows": "native", "linux": "lua"},
+    "parameters": {
+        "channelName": {
+            "type": "string",
+            "platforms": ["android"],
+            "default": "Playback",
+            "description": "Name of the notification channel of the media notification, which the person sees in the settings of the app."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "MediaSessionPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "visionos", "macos"], "name": "MediaPlayer.framework"},
+        {"type": "infoPlist", "platforms": ["ios", "tvos", "visionos"], "values": {"UIBackgroundModes": ["audio"]}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/media-session.js"},
+        {"type": "nativeLibrary", "platforms": ["windows"], "cmake": "native"}
+    ]
+}

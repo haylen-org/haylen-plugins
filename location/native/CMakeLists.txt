@@ -1,0 +1,23 @@
+# The desktop part of the Location plugin, a C++ library that the desktop player and the Windows and Linux apps load. The tooling builds the target named after the plugin, `location`, against the installed SDK of the engine, whose target `haylen::native` gives it `haylen/platform/native/HaylenNative.h` and nlohmann/json. Windows tells the location through its location API and Linux through GeoClue over D-Bus, while the desktop player of macOS answers "unsupported", since Core Location gives the location only to an app bundle.
+cmake_minimum_required(VERSION 3.28...4.4)
+project(location LANGUAGES CXX)
+
+find_package(haylen CONFIG REQUIRED)
+
+add_library(location Location.cpp LocationBridge.cpp)
+target_link_libraries(location PRIVATE haylen::native)
+target_compile_features(location PRIVATE cxx_std_20)
+if(APPLE)
+  target_sources(location PRIVATE MacosLocation.cpp)
+elseif(WIN32)
+  target_sources(location PRIVATE WindowsLocation.cpp WindowsLocationPermission.cpp WindowsLocationPlace.cpp WindowsLocationWatch.cpp WindowsLocationWorker.cpp)
+  target_compile_definitions(location PRIVATE NOMINMAX)
+  target_link_libraries(location PRIVATE ole32 runtimeobject)
+else()
+  find_package(Threads REQUIRED)
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(DBUS REQUIRED IMPORTED_TARGET dbus-1)
+  target_sources(location PRIVATE LinuxLocation.cpp GeoClueSession.cpp)
+  target_link_libraries(location PRIVATE Threads::Threads PkgConfig::DBUS)
+endif()
+set_target_properties(location PROPERTIES CXX_EXTENSIONS OFF CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)

@@ -1,0 +1,13 @@
+# The build folders of the Android modules and of the CMake projects in native/.
+build/
+# The caches of Gradle, Kotlin and the Android build of C++ code, and the local settings of Gradle.
+.gradle/
+.kotlin/
+.cxx/
+local.properties
+# The signing keys of Android release builds with their passwords, which "haylen app sign" writes into an app.
+**/platform/android/keystore/
+# Files of Finder and of the editors.
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,27 @@
+{
+    "interface": 1,
+    "id": "app-tracking-transparency",
+    "name": "App Tracking Transparency",
+    "version": "1.0.0",
+    "description": "The permission tracking, which asks the person on Apple platforms whether the app may track them across the apps and websites of other companies, and the advertising identifier once they allow it.",
+    "implementations": {"ios": "native", "catalyst": "native", "tvos": "native", "visionos": "lua", "macos": "native", "android": "native", "web": "native", "windows": "lua", "linux": "lua"},
+    "dependencies": {"permissions": "1.0.0"},
+    "permissions": ["tracking"],
+    "parameters": {
+        "trackingDescription": {
+            "type": "string",
+            "platforms": ["ios", "catalyst", "tvos", "macos"],
+            "default": "Your data is used to show you ads that are more relevant to you.",
+            "description": "The text of the prompt that tells the person why the app asks, the NSUserTrackingUsageDescription of the app."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios", "catalyst", "tvos", "macos"], "name": "AppTrackingTransparencyPlugin"},
+        {"type": "appleSources", "platforms": ["ios", "catalyst", "tvos", "macos"], "path": "apple"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "macos"], "name": "AppTrackingTransparency.framework"},
+        {"type": "framework", "platforms": ["ios", "catalyst", "tvos", "macos"], "name": "AdSupport.framework"},
+        {"type": "infoPlist", "platforms": ["ios", "catalyst", "tvos", "macos"], "values": {"NSUserTrackingUsageDescription": "${trackingDescription}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/app-tracking-transparency.js"}
+    ]
+}

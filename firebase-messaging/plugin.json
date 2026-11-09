@@ -1,0 +1,53 @@
+{
+    "interface": 1,
+    "id": "firebase-messaging",
+    "name": "Firebase Cloud Messaging",
+    "version": "1.0.0",
+    "description": "Receives push notifications and data messages from Firebase Cloud Messaging, with the registration of the app instance, topics and the taps that open the app, on iOS, Android and the web.",
+    "implementations": {"ios": "native", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "native", "web": "native", "windows": "lua", "linux": "lua"},
+    "dependencies": {"firebase": "1.0", "notifications": "1.0"},
+    "parameters": {
+        "apsEnvironment": {
+            "type": "string",
+            "platforms": ["ios"],
+            "default": "development",
+            "description": "The push environment of Apple, development for builds of Xcode and production for the App Store and TestFlight."
+        },
+        "showInForeground": {
+            "type": "boolean",
+            "platforms": ["ios", "android"],
+            "default": true,
+            "description": "Whether the notification of a message shows while the app is in front, besides reaching the app as messageReceived."
+        },
+        "vapidKey": {
+            "type": "string",
+            "platforms": ["web"],
+            "required": true,
+            "description": "The public key of the web push certificate of the Firebase project, from the Cloud Messaging settings of the project."
+        },
+        "notificationChannel": {
+            "type": "string",
+            "platforms": ["android"],
+            "default": "default",
+            "description": "The notification channel of Android that the notifications of the app use when the message names none."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios"], "name": "FirebaseMessagingPlugin"},
+        {"type": "appleSources", "platforms": ["ios"], "path": "apple"},
+        {
+            "type": "swiftPackage",
+            "platforms": ["ios"],
+            "name": "Firebase",
+            "url": "https://github.com/firebase/firebase-ios-sdk.git",
+            "exactVersion": "13.1.1",
+            "products": ["FirebaseMessaging", "FirebaseInstallations"]
+        },
+        {"type": "framework", "platforms": ["ios"], "name": "UserNotifications.framework"},
+        {"type": "infoPlist", "platforms": ["ios"], "values": {"UIBackgroundModes": ["remote-notification"], "FirebaseMessagingInstallationIdEnabled": true}},
+        {"type": "entitlements", "platforms": ["ios"], "values": {"aps-environment": "${apsEnvironment}"}},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "manifestPlaceholder", "platforms": ["android"], "name": "firebaseMessagingChannel", "value": "${notificationChannel}"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/firebase-messaging.js"}
+    ]
+}

@@ -1,0 +1,39 @@
+{
+    "interface": 1,
+    "id": "firebase",
+    "name": "Firebase",
+    "version": "1.0.0",
+    "description": "Configures the Firebase app that the other Firebase plugins use, from the configuration files of the Firebase project.",
+    "implementations": {"ios": "native", "catalyst": "lua", "tvos": "lua", "visionos": "lua", "macos": "lua", "android": "native", "web": "native", "windows": "lua", "linux": "lua"},
+    "parameters": {
+        "servicesPlist": {
+            "type": "file",
+            "platforms": ["ios"],
+            "required": true,
+            "description": "The GoogleService-Info.plist of the iOS app of the Firebase project, relative to the app folder, such as platform/firebase/GoogleService-Info.plist."
+        },
+        "servicesJson": {
+            "type": "file",
+            "platforms": ["android"],
+            "required": true,
+            "description": "The google-services.json of the Android app of the Firebase project, relative to the app folder, such as platform/firebase/google-services.json."
+        },
+        "webConfig": {
+            "type": "object",
+            "platforms": ["web"],
+            "required": true,
+            "description": "The configuration object of the web app of the Firebase project, with apiKey, authDomain, projectId, appId, messagingSenderId and measurementId."
+        }
+    },
+    "contributions": [
+        {"type": "appleClass", "platforms": ["ios"], "name": "FirebasePlugin"},
+        {"type": "appleSources", "platforms": ["ios"], "path": "apple"},
+        {"type": "swiftPackage", "platforms": ["ios"], "name": "Firebase", "url": "https://github.com/firebase/firebase-ios-sdk.git", "exactVersion": "13.1.1", "products": ["FirebaseCore"]},
+        {"type": "infoPlist", "platforms": ["ios"], "values": {"FirebaseAppDelegateProxyEnabled": false}},
+        {"type": "appleResource", "platforms": ["ios"], "path": "${servicesPlist}"},
+        {"type": "gradleModule", "platforms": ["android"], "path": "android"},
+        {"type": "gradlePlugin", "platforms": ["android"], "id": "com.google.gms.google-services", "version": "4.5.0"},
+        {"type": "projectFile", "platforms": ["android"], "from": "${servicesJson}", "to": "app/google-services.json"},
+        {"type": "webModule", "platforms": ["web"], "path": "web/firebase.js"}
+    ]
+}
